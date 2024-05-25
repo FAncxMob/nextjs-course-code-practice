@@ -10,18 +10,32 @@ const clientDetailPage = () => {
   );
   console.log(router.query, clientId, targetClientRelatedList);
 
+  const loadDetail = () => {
+    // navigate
+    router.push({
+      pathname: "/client/[clientId]/[clientRelatedId]",
+      query: {
+        clientRelatedId: "test-clientRelatedId",
+        clientRelatedName: "test-clientRelatedName",
+        clientId: "text-client",
+      },
+    });
+  };
+
   return (
     <div>
       <h1>Client Detail Page</h1>
       <ul>
-        {targetClientRelatedList.relatedClients.map((relatedClient) => {
+        {targetClientRelatedList?.relatedClients.map((relatedClient) => {
           return (
             <li key={relatedClient.id}>
               <Link
                 href={{
                   pathname: "/client/[clientId]/[clientRelatedId]",
                   query: {
-                    relatedClientId: relatedClient.id,
+                    clientRelatedId: relatedClient?.id,
+                    clientRelatedName: relatedClient?.name,
+                    clientId: clientId,
                   },
                 }}
               >
@@ -31,6 +45,8 @@ const clientDetailPage = () => {
           );
         })}
       </ul>
+
+      <button onClick={loadDetail}>Load RelatedDetail</button>
     </div>
   );
 };
